@@ -1,0 +1,1 @@
+vue@3 vue-router@4 gsap
