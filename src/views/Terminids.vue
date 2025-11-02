@@ -123,11 +123,6 @@ export default {
 </script>
 
 <style scoped>
-img {
-  width: 100%;
-  object-fit: cover; 
-  object-position: top; 
-}
 
 .page-container {
   display: flex;
@@ -245,7 +240,6 @@ h3 {
 }
 
 .flex-item img {
-  width: 100%;
   height: 150px;
   border-radius: 8px;
   object-fit: cover;

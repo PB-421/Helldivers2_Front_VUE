@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import SuperEarth from '../views/Superearth.vue'
 import Terminids from '../views/Terminids.vue'
 import Automatons from '../views/Automatons.vue'
+import Illuminates from '../views/Illuminates.vue'
 // definicion de rutas y componente principal usan (se pueden definir mas comopentes en la view)
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
     path: '/automatons',
     name: 'Automatons',
     component: Automatons
+  },
+  {
+    path: '/illuminates',
+    name: 'Illuminates',
+    component: Illuminates
   },
 ]
 

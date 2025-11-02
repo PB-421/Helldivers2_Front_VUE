@@ -2,17 +2,16 @@
   <div class="page-container">
     <Header />
     <main class="content">
-      <h1>La Legión Automata</h1>
-      <h3>Unos robots socialistas que pretenden envenenar la libertad de ideas socialistas.</h3>
+      <h1>Los Iluminados</h1>
+      <h3>Una raza de calamares tiránicos cuyo proposito es la descrución de la democracia gestionada.</h3>
 
       <div class="search-filter">
         <input type="text" v-model="searchQuery" placeholder="Buscar por nombre..." class="search-box" />
 
-        <select v-model="selectedDivision" class="filter-select">
-          <option value="">Todas las divisiones/estructuras</option>
-          <option v-for="type in availableDivisions" :key="type" :value="type">
-            {{ type }}
-          </option>
+        <select v-model="selectedFilter" class="filter-select">
+          <option value="">Enemigos y estructuras</option>
+          <option value="enemigos">Enemigos</option>
+          <option value="estructuras">Estructuras</option>
         </select>
       </div>
 
@@ -22,16 +21,16 @@
             <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite" />
           </circle>
         </svg>
-        <p class="loading-text">Cargando automatas...</p>
+        <p class="loading-text">Cargando iluminados...</p>
       </div>
 
       <div v-else>
-        <div v-for="(group, division) in groupedAutomatas" :key="division" class="division-group" >
-          <h2>{{ division }}</h2>
+        <div v-for="(group, tipo) in groupedIluminados" :key="tipo" class="division-group">
+          <h2>{{ tipo }}</h2>
           <div class="home-container">
             <div class="flex-item" v-for="item in group" :key="item.id">
               <div class="info">
-                <img v-if="item.photo_Url" :src="item.photo_Url" :alt="item.name" />
+                <img v-if="item.photo_Url" :src="item.photo_Url" :alt="item.name" class="item-image" />
                 <p class="name">{{ item.name }}</p>
                 <div class="extra-info">
                   <p v-if="item.resistance && item.resistance !== 'N/A'">
@@ -44,7 +43,7 @@
           </div>
         </div>
 
-        <div v-if="!Object.keys(groupedAutomatas).length" class="no-results">
+        <div v-if="!Object.keys(groupedIluminados).length" class="no-results">
           <p>No se encontraron resultados.</p>
         </div>
       </div>
@@ -59,71 +58,62 @@ import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 
 export default {
-  name: 'Automatons',
+  name: 'Illuminates',
   components: { Header, Footer },
   data() {
     return {
-      automatas: [],
+      iluminados: [],
       searchQuery: '',
-      selectedDivision: '',
+      selectedFilter: '',
       isLoading: true
     }
   },
   computed: {
-    availableDivisions() {
-      const types = new Set(
-        this.automatas.map(e => {
-            if (e.division === 'N/A') return 'Estructuras'
-            if (!e.division || e.division.trim() === '' || e.division === 'Ninguna') return 'Estandar'
-            return e.division
-          })
-      )
-      return Array.from(types).sort()
-    },
-
-    groupedAutomatas() {
-      const filtered = this.automatas.filter(e => {
+    filteredIluminados() {
+      return this.iluminados.filter(e => {
         const matchesName = e.name?.toLowerCase().includes(this.searchQuery.toLowerCase())
 
-        const divisionName = e.division === 'N/A' ? 'Estructuras': (!e.division || e.division.trim() === '' || e.division === 'Ninguna') ? 'Estandar' : e.division
+        let matchesType = true
+        if (this.selectedFilter === 'enemigos') matchesType = e.structure === false
+        else if (this.selectedFilter === 'estructuras') matchesType = e.structure === true
 
-        const matchesDivision = !this.selectedDivision || this.selectedDivision === divisionName
-
-        return matchesName && matchesDivision
+        return matchesName && matchesType
       })
+    },
 
-      return filtered.reduce((groups, item) => {
-        const divisionKey = item.division === 'N/A' ? 'Estructuras' : (!item.division || item.division.trim() === '' || item.division === 'Ninguna') ? 'Estandar' : item.division
-        if (!groups[divisionKey]) groups[divisionKey] = []
-        groups[divisionKey].push(item)
-        return groups
+    groupedIluminados() {
+      const groups = this.filteredIluminados.reduce((acc, item) => {
+        const tipo = item.structure ? 'Estructuras' : 'Enemigos'
+        if (!acc[tipo]) acc[tipo] = []
+        acc[tipo].push(item)
+        return acc
       }, {})
+      return groups
     }
   },
   methods: {
-    async fetchAutomatas() {
+    async fetchIluminados() {
       this.isLoading = true
       try {
-        const response = await fetch('https://helldivers2-api.onrender.com/api/automatons')
+        const response = await fetch('https://helldivers2-api.onrender.com/api/illuminate')
         if (!response.ok) throw new Error(`Error en la API: ${response.status}`)
         const data = await response.json()
-        this.automatas = Array.isArray(data) ? data : []
+        this.iluminados = Array.isArray(data) ? data : []
       } catch (error) {
         console.error('Error al obtener datos:', error)
-        this.automatas = []
+        this.iluminados = []
       } finally {
         this.isLoading = false
       }
     }
   },
   mounted() {
-    this.fetchAutomatas()
+    this.fetchIluminados()
   }
 }
 </script>
 
 <style scoped>
-
 .page-container {
   display: flex;
   flex-direction: column;
@@ -155,6 +145,13 @@ export default {
 h1 {
   text-align: center;
   margin-bottom: 20px;
+  color: #41639C;
+}
+
+h2 {
+  margin-bottom: 10px;
+  border-bottom: 2px solid #FFE900;
+  padding-bottom: 5px;
   color: #41639C;
 }
 
@@ -203,13 +200,6 @@ h3 {
   margin-bottom: 40px;
 }
 
-.division-group h2 {
-  margin-bottom: 10px;
-  border-bottom: 2px solid #FFE900;
-  padding-bottom: 5px;
-  color: #41639C;
-}
-
 .home-container {
   display: flex;
   justify-content: flex-start;
@@ -239,10 +229,11 @@ h3 {
   background-color: #2a3542;
 }
 
-.flex-item img {
+.item-image {
   height: 150px;
   border-radius: 8px;
   object-fit: cover;
+  object-position: center;
 }
 
 .info {

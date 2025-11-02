@@ -17,7 +17,7 @@
         <img src="../components/icons/automatons.png" alt="Imagen 3"/>
         <p>Automatas</p>
       </div>
-      <div class="flex-item" @click="goToUrl('url4')">
+      <div class="flex-item" @click="goToUrl('illuminates')">
         <img src="../components/icons/illuminate.png" alt="Imagen 4" />
         <p>Iluminados</p>
       </div>
