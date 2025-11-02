@@ -13,7 +13,7 @@
         <img src="../components/icons/terminids.png" alt="Imagen 2" />
         <p>Terminidos</p>
       </div>
-      <div class="flex-item" @click="goToUrl('url3')">
+      <div class="flex-item" @click="goToUrl('automatons')">
         <img src="../components/icons/automatons.png" alt="Imagen 3"/>
         <p>Automatas</p>
       </div>

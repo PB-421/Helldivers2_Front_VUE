@@ -2,14 +2,15 @@
   <div class="page-container">
     <Header />
     <main class="content">
-      <h1>Lista de Estratagemas</h1>
-      <h3>Conoce las estratagemas usadas para defender la democracia gestionada.</h3>
+      <h1>La Legión Automata</h1>
+      <h3>Unos robots socialistas que pretenden envenenar la libertad de ideas socialistas.</h3>
 
       <div class="search-filter">
-        <input type="text" v-model="searchQuery" placeholder="Buscar por nombre..."class="search-box" />
-        <select v-model="selectedType" class="filter-select">
-          <option value="">Todos los tipos</option>
-          <option v-for="type in availableTypes" :key="type" :value="type">
+        <input type="text" v-model="searchQuery" placeholder="Buscar por nombre..." class="search-box" />
+
+        <select v-model="selectedDivision" class="filter-select">
+          <option value="">Todas las divisiones/estructuras</option>
+          <option v-for="type in availableDivisions" :key="type" :value="type">
             {{ type }}
           </option>
         </select>
@@ -17,30 +18,34 @@
 
       <div v-if="isLoading" class="loading-container">
         <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
-          <circle cx="25" cy="25" r="20" stroke="#FFE900" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4">
-            <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/>
+          <circle cx="25" cy="25" r="20" stroke="#FFE900" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" >
+            <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite" />
           </circle>
         </svg>
-        <p class="loading-text">Cargando estratagemas...</p>
+        <p class="loading-text">Cargando automatas...</p>
       </div>
 
       <div v-else>
-        <div v-for="(group, department) in groupedEstratagemas" :key="department" class="department-group">
-          <h2>{{ department || "Sin departamento" }}</h2>
+        <div v-for="(group, division) in groupedAutomatas" :key="division" class="division-group" >
+          <h2>{{ division }}</h2>
           <div class="home-container">
             <div class="flex-item" v-for="item in group" :key="item.id">
-              <img v-if="item.photo_Url" :src="item.photo_Url" :alt="item.name" />
-
               <div class="info">
+                <img v-if="item.photo_Url" :src="item.photo_Url" :alt="item.name" />
                 <p class="name">{{ item.name }}</p>
                 <div class="extra-info">
-                  <p>{{ item.type || "Desconocido" }}</p>
-                  <p v-if="item.penetration !== 'N/A'">{{ item.penetration }}</p>
+                  <p v-if="item.resistance && item.resistance !== 'N/A'">
+                    Resistencia: {{ item.resistance }}
+                  </p>
                   <p>{{ item.description }}</p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+
+        <div v-if="!Object.keys(groupedAutomatas).length" class="no-results">
+          <p>No se encontraron resultados.</p>
         </div>
       </div>
     </main>
@@ -54,64 +59,77 @@ import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 
 export default {
-  name: 'SuperEarth',
+  name: 'Automatons',
   components: { Header, Footer },
   data() {
     return {
-      estratagemas: [],
+      automatas: [],
       searchQuery: '',
-      selectedType: '',
-      isLoading: true 
+      selectedDivision: '',
+      isLoading: true
     }
   },
   computed: {
-    availableTypes() {
+    availableDivisions() {
       const types = new Set(
-        this.estratagemas.map(e => e.type).filter(t => t && t.trim() !== '')
+        this.automatas.map(e => {
+            if (e.division === 'N/A') return 'Estructuras'
+            if (!e.division || e.division.trim() === '' || e.division === 'Ninguna') return 'Estandar'
+            return e.division
+          })
       )
       return Array.from(types).sort()
     },
-    groupedEstratagemas() {
-      const filtered = this.estratagemas.filter(e => {
+
+    groupedAutomatas() {
+      const filtered = this.automatas.filter(e => {
         const matchesName = e.name?.toLowerCase().includes(this.searchQuery.toLowerCase())
-        const matchesType = !this.selectedType || e.type === this.selectedType
-        return matchesName && matchesType
+
+        const divisionName = e.division === 'N/A' ? 'Estructuras': (!e.division || e.division.trim() === '' || e.division === 'Ninguna') ? 'Estandar' : e.division
+
+        const matchesDivision = !this.selectedDivision || this.selectedDivision === divisionName
+
+        return matchesName && matchesDivision
       })
 
       return filtered.reduce((groups, item) => {
-        const dept = item.department || 'Sin departamento'
-        if (!groups[dept]) groups[dept] = []
-        groups[dept].push(item)
+        const divisionKey = item.division === 'N/A' ? 'Estructuras' : (!item.division || item.division.trim() === '' || item.division === 'Ninguna') ? 'Estandar' : item.division
+        if (!groups[divisionKey]) groups[divisionKey] = []
+        groups[divisionKey].push(item)
         return groups
       }, {})
     }
   },
   methods: {
-    async fetchEstratagemas() {
-      this.isLoading = true 
+    async fetchAutomatas() {
+      this.isLoading = true
       try {
-        const response = await fetch('https://helldivers2-api.onrender.com/api/superearth')
-        if (!response.ok) {
-          console.error('Error en la API:', response.status)
-          this.estratagemas = []
-          return
-        }
+        const response = await fetch('https://helldivers2-api.onrender.com/api/automatons')
+        if (!response.ok) throw new Error(`Error en la API: ${response.status}`)
         const data = await response.json()
-        this.estratagemas = Array.isArray(data) ? data : []
+        this.automatas = Array.isArray(data) ? data : []
       } catch (error) {
-        console.error('Error al obtener los datos de la API:', error)
+        console.error('Error al obtener datos:', error)
+        this.automatas = []
       } finally {
-        this.isLoading = false 
+        this.isLoading = false
       }
     }
   },
   mounted() {
-    this.fetchEstratagemas()
+    this.fetchAutomatas()
   }
 }
 </script>
 
 <style scoped>
+
+img {
+  width: 100%;
+  object-fit: cover; /* hace que la imagen se recorte sin deformarse */
+  object-position: top; /* muestra la parte superior de la imagen */
+}
+
 .page-container {
   display: flex;
   flex-direction: column;
@@ -121,7 +139,7 @@ export default {
 .content {
   flex: 1;
   margin: 10px 75px;
-  padding-bottom: 80px; /* espacio para el footer */
+  padding-bottom: 80px;
 }
 
 .loading-container {
@@ -187,11 +205,11 @@ h3 {
   cursor: pointer;
 }
 
-.department-group {
+.division-group {
   margin-bottom: 40px;
 }
 
-.department-group h2 {
+.division-group h2 {
   margin-bottom: 10px;
   border-bottom: 2px solid #FFE900;
   padding-bottom: 5px;
@@ -206,7 +224,6 @@ h3 {
   padding: 10px 0;
 }
 
-/* Tarjeta */
 .flex-item {
   display: flex;
   flex-direction: column;
@@ -257,5 +274,11 @@ h3 {
 .flex-item:hover .extra-info {
   max-height: 200px;
   opacity: 1;
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 40px;
+  color: #999;
 }
 </style>

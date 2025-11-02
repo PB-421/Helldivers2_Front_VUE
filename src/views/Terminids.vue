@@ -9,8 +9,7 @@
         <input type="text" v-model="searchQuery" placeholder="Buscar por nombre..." class="search-box" />
 
         <select v-model="selectedStrain" class="filter-select">
-          <option value="">Todas las cepas</option>
-          <option value="Sin Cepa">Sin Cepa</option>
+          <option value="">Todas las cepas/estructuras</option>
           <option v-for="type in availableStrains" :key="type" :value="type">
             {{ type }}
           </option>
@@ -60,7 +59,7 @@ import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 
 export default {
-  name: 'SuperEarth',
+  name: 'Terminids',
   components: { Header, Footer },
   data() {
     return {
@@ -124,6 +123,12 @@ export default {
 </script>
 
 <style scoped>
+img {
+  width: 100%;
+  object-fit: cover; 
+  object-position: top; 
+}
+
 .page-container {
   display: flex;
   flex-direction: column;
