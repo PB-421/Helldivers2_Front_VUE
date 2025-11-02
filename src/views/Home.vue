@@ -9,7 +9,7 @@
         <img src="../components/icons/superearth2.png" alt="Imagen 1" />
         <p>SuperTierra</p>
       </div>
-      <div class="flex-item" @click="goToUrl('url2')">
+      <div class="flex-item" @click="goToUrl('terminids')">
         <img src="../components/icons/terminids.png" alt="Imagen 2" />
         <p>Terminidos</p>
       </div>
