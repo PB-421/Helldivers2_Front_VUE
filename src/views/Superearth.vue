@@ -6,6 +6,7 @@
       <h3>Conoce las estratagemas usadas para defender la democracia gestionada.</h3>
 
       <div class="search-filter">
+        <input type="text" v-model="searchQuery" placeholder="Buscar por nombre..."class="search-box" />
         <select v-model="selectedType" class="filter-select">
           <option value="">Todos los tipos</option>
           <option v-for="type in availableTypes" :key="type" :value="type">

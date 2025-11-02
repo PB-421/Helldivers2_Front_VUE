@@ -2,8 +2,8 @@
   <Header />
   <main class="content">
     <h1>Bienvenido a la Base de Datos de Supertierra</h1>
-    <h2>Todo lo que conocemos de los enemigos de la libertad y las herramientas para defenderla</h2>
-    <h3>Selecciona una faccion</h3>
+    <h2>Todo lo que conocemos de los enemigos de la libertad y las estratagemas para defenderla</h2>
+    <h3>Selecciona una facción</h3>
     <div class="home-container">
       <div class="flex-item" @click="goToUrl('superearth')">
         <img src="../components/icons/superearth2.png" alt="Imagen 1" />
