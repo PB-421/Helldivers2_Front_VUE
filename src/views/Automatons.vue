@@ -2,8 +2,8 @@
   <div class="page-container">
     <Header :startIndex="3"/>
     <main class="content">
-      <h1>La Legión Automata</h1>
-      <h3>Unos robots socialistas que pretenden envenenar la libertad de ideas socialistas.</h3>
+      <h1>La Legión Autómata</h1>
+      <h3>Unos robots socialistas que pretenden envenenar la libertad de ideas antidemocráticas.</h3>
 
       <div class="search-filter">
         <input type="text" v-model="searchQuery" placeholder="Buscar por nombre..." class="search-box" /> <!-- buscador por nombre-->
@@ -21,7 +21,7 @@
             <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite" />
           </circle>
         </svg>
-        <p class="loading-text">Cargando automatas...</p>
+        <p class="loading-text">Cargando autómatas...</p>
       </div>
 
       <div v-else> <!-- mostrar los resultados de groupedAutomatas por el tipo de division-->
@@ -190,7 +190,6 @@ h3 {
   font-size: 16px;
   background-color: #1f2833;
   color: #fff;
-  appearance: none;
   cursor: pointer;
 }
 
@@ -234,10 +233,10 @@ h3 {
 }
 
 .flex-item p {
-  word-wrap: break-word;       /* Soporta palabras largas */
+  word-wrap: break-word;      
   white-space: break-all;
-  overflow-wrap: break-word;   /* Versión moderna */
-  text-align: center;          /* Centra el texto, opcional */
+  overflow-wrap: break-word;   
+  text-align: center;         
   margin: 0 25px;
 }
 

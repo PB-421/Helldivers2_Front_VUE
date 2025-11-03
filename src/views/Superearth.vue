@@ -10,7 +10,7 @@
         <select v-model="selectedType" class="filter-select"> <!-- menu desplegable para filtrar por tipo-->
           <option value="">Todos los tipos</option>
           <option v-for="type in availableTypes" :key="type" :value="type">
-            {{ type }}
+            {{ type  }}
           </option>
         </select>
       </div>
@@ -182,7 +182,6 @@ h3 {
   font-size: 16px;
   background-color: #1f2833;
   color: #fff;
-  appearance: none;
   cursor: pointer;
 }
 

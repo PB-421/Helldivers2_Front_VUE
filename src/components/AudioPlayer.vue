@@ -116,8 +116,6 @@ export default {
               if (this.player && this.isPlaying)
                 this.currentTime = this.player.getCurrentTime();
             }, 250);
-            this.isPlaying = true; // Reproduccion directa
-            e.target.playVideo();  
           },
           onStateChange: (e) => { //cuando el video cambia de estado:
             if (e.data === 0) this.isPlaying = false;

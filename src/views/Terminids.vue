@@ -190,7 +190,6 @@ h3 {
   font-size: 16px;
   background-color: #1f2833;
   color: #fff;
-  appearance: none;
   cursor: pointer;
 }
 
@@ -238,6 +237,14 @@ h3 {
   height: 150px;
   border-radius: 8px;
   object-fit: cover;
+}
+
+.flex-item p {
+  word-wrap: break-word;      
+  white-space: break-all;
+  overflow-wrap: break-word;   
+  text-align: center;         
+  margin: 0 25px;
 }
 
 .info {

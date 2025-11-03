@@ -191,7 +191,6 @@ h3 {
   font-size: 16px;
   background-color: #1f2833;
   color: #fff;
-  appearance: none;
   cursor: pointer;
 }
 
