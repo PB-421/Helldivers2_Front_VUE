@@ -34,7 +34,7 @@ router.afterEach(() => {
 
 <template>
   <div v-if="overlayVisible" :class="['overlay', overlayClass]">
-    <img src="./icons/superearth.png" alt="SuperEarth Logo" class="overlay-img" />
+    <img src="/superearth.png" alt="SuperEarth Logo" class="overlay-img" />
     <div :class="['loading-icon', loadingClass]">
       <!-- Svg para el icono de carga -->
       <svg width="50" height="50" viewBox="0 0 50 50" fill="none">

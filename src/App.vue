@@ -6,8 +6,6 @@ import PageTransition from './components/PageTransition.vue'
 <template>
   <!-- Aquí usamos el PageTransition para la animación -->
   <PageTransition />
-  <Header />
   <RouterView />
-  <Footer />
 </template>
 

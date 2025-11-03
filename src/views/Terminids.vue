@@ -1,14 +1,13 @@
 <template>
   <div class="page-container">
-    <Header />
+    <Header :startIndex="2"/>
     <main class="content">
       <h1>La Plaga Terminida</h1>
       <h3>Unos insectos fascistas que desprecian la libertad y la democracia gestionada.</h3>
 
       <div class="search-filter">
-        <input type="text" v-model="searchQuery" placeholder="Buscar por nombre..." class="search-box" />
-
-        <select v-model="selectedStrain" class="filter-select">
+        <input type="text" v-model="searchQuery" placeholder="Buscar por nombre..." class="search-box" /> <!-- buscador por nombre-->
+        <select v-model="selectedStrain" class="filter-select"> <!-- menu desplegable que filtra por cepa-->
           <option value="">Todas las cepas/estructuras</option>
           <option v-for="type in availableStrains" :key="type" :value="type">
             {{ type }}
@@ -16,7 +15,7 @@
         </select>
       </div>
 
-      <div v-if="isLoading" class="loading-container">
+      <div v-if="isLoading" class="loading-container"> <!-- mensaje de carga-->
         <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
           <circle cx="25" cy="25" r="20" stroke="#FFE900" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" >
             <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite" />
@@ -25,7 +24,7 @@
         <p class="loading-text">Cargando terminidos...</p>
       </div>
 
-      <div v-else>
+      <div v-else> <!-- mostrar los resultados de groupedTerminidos por el tipo de cepa-->
         <div v-for="(group, strain) in groupedTerminidos" :key="strain" class="strain-group" >
           <h2>{{ strain }}</h2>
           <div class="home-container">
@@ -42,10 +41,6 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <div v-if="!Object.keys(groupedTerminidos).length" class="no-results">
-          <p>No se encontraron resultados.</p>
         </div>
       </div>
     </main>
@@ -69,7 +64,7 @@ export default {
       isLoading: true
     }
   },
-  computed: {
+  computed: { //Datos que se calculan a partir de otros datos, como el numero de cepas
     availableStrains() {
       const types = new Set(
         this.terminidos.map(e => {
@@ -83,11 +78,11 @@ export default {
 
     groupedTerminidos() {
       const filtered = this.terminidos.filter(e => {
-        const matchesName = e.name?.toLowerCase().includes(this.searchQuery.toLowerCase())
+        const matchesName = e.name?.toLowerCase().includes(this.searchQuery.toLowerCase()) //nombre
 
-        const strainName = e.strain === 'N/A' ? 'Estructuras': (!e.strain || e.strain.trim() === '' || e.strain === 'Ninguna') ? 'Sin Cepa' : e.strain
+        const strainName = e.strain === 'N/A' ? 'Estructuras': (!e.strain || e.strain.trim() === '' || e.strain === 'Ninguna') ? 'Sin Cepa' : e.strain //cepa
 
-        const matchesStrain = !this.selectedStrain || this.selectedStrain === strainName
+        const matchesStrain = !this.selectedStrain || this.selectedStrain === strainName //por si no hay cepa selecionada
 
         return matchesName && matchesStrain
       })

@@ -1,14 +1,13 @@
 <template>
   <div class="page-container">
-    <Header />
+    <Header :startIndex="3"/>
     <main class="content">
       <h1>La Legión Automata</h1>
       <h3>Unos robots socialistas que pretenden envenenar la libertad de ideas socialistas.</h3>
 
       <div class="search-filter">
-        <input type="text" v-model="searchQuery" placeholder="Buscar por nombre..." class="search-box" />
-
-        <select v-model="selectedDivision" class="filter-select">
+        <input type="text" v-model="searchQuery" placeholder="Buscar por nombre..." class="search-box" /> <!-- buscador por nombre-->
+        <select v-model="selectedDivision" class="filter-select"> <!-- menu desplegable que filtra por division-->
           <option value="">Todas las divisiones/estructuras</option>
           <option v-for="type in availableDivisions" :key="type" :value="type">
             {{ type }}
@@ -16,7 +15,7 @@
         </select>
       </div>
 
-      <div v-if="isLoading" class="loading-container">
+      <div v-if="isLoading" class="loading-container"> <!-- mensaje de carga-->
         <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
           <circle cx="25" cy="25" r="20" stroke="#FFE900" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" >
             <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite" />
@@ -25,7 +24,7 @@
         <p class="loading-text">Cargando automatas...</p>
       </div>
 
-      <div v-else>
+      <div v-else> <!-- mostrar los resultados de groupedAutomatas por el tipo de division-->
         <div v-for="(group, division) in groupedAutomatas" :key="division" class="division-group" >
           <h2>{{ division }}</h2>
           <div class="home-container">
@@ -42,10 +41,6 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <div v-if="!Object.keys(groupedAutomatas).length" class="no-results">
-          <p>No se encontraron resultados.</p>
         </div>
       </div>
     </main>
@@ -69,7 +64,7 @@ export default {
       isLoading: true
     }
   },
-  computed: {
+  computed: { //Datos que se calculan a partir de otros datos, como el numero de divisiones
     availableDivisions() {
       const types = new Set(
         this.automatas.map(e => {
@@ -83,11 +78,11 @@ export default {
 
     groupedAutomatas() {
       const filtered = this.automatas.filter(e => {
-        const matchesName = e.name?.toLowerCase().includes(this.searchQuery.toLowerCase())
+        const matchesName = e.name?.toLowerCase().includes(this.searchQuery.toLowerCase()) //nombre
 
-        const divisionName = e.division === 'N/A' ? 'Estructuras': (!e.division || e.division.trim() === '' || e.division === 'Ninguna') ? 'Estandar' : e.division
+        const divisionName = e.division === 'N/A' ? 'Estructuras': (!e.division || e.division.trim() === '' || e.division === 'Ninguna') ? 'Estandar' : e.division //division
 
-        const matchesDivision = !this.selectedDivision || this.selectedDivision === divisionName
+        const matchesDivision = !this.selectedDivision || this.selectedDivision === divisionName //si no hay division selecionada
 
         return matchesName && matchesDivision
       })
@@ -224,7 +219,6 @@ h3 {
   align-items: center;
   cursor: pointer;
   width: 220px;
-  padding: 10px;
   transition: all 0.3s ease-in-out;
   background-color: #1f2833;
   border-radius: 10px;
@@ -237,6 +231,14 @@ h3 {
 .flex-item:hover {
   transform: scale(1.07);
   background-color: #2a3542;
+}
+
+.flex-item p {
+  word-wrap: break-word;       /* Soporta palabras largas */
+  white-space: break-all;
+  overflow-wrap: break-word;   /* Versión moderna */
+  text-align: center;          /* Centra el texto, opcional */
+  margin: 0 25px;
 }
 
 .flex-item img {

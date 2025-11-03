@@ -1,24 +1,24 @@
 <template>
-  <Header />
+  <Header :startIndex="0"/>
   <main class="content">
     <h1>Bienvenido a la Base de Datos de Supertierra</h1>
     <h2>Todo lo que conocemos de los enemigos de la libertad y las estratagemas para defenderla</h2>
     <h3>Selecciona una facción</h3>
     <div class="home-container">
       <div class="flex-item" @click="goToUrl('superearth')">
-        <img src="../components/icons/superearth2.png" alt="Imagen 1" />
+        <img src="/superearth2.png" alt="Imagen 1" />
         <p>SuperTierra</p>
       </div>
       <div class="flex-item" @click="goToUrl('terminids')">
-        <img src="../components/icons/terminids.png" alt="Imagen 2" />
+        <img src="/terminids.png" alt="Imagen 2" />
         <p>Terminidos</p>
       </div>
       <div class="flex-item" @click="goToUrl('automatons')">
-        <img src="../components/icons/automatons.png" alt="Imagen 3"/>
+        <img src="/automatons.png" alt="Imagen 3"/>
         <p>Automatas</p>
       </div>
       <div class="flex-item" @click="goToUrl('illuminates')">
-        <img src="../components/icons/illuminate.png" alt="Imagen 4" />
+        <img src="/illuminate.png" alt="Imagen 4" />
         <p>Iluminados</p>
       </div>
     </div>

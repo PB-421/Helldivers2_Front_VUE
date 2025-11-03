@@ -1,21 +1,20 @@
 <template>
   <div class="page-container">
-    <Header />
+    <Header :startIndex="4"/>
     <main class="content">
-      <h1>Los Iluminados</h1>
-      <h3>Una raza de calamares tiránicos cuyo proposito es la descrución de la democracia gestionada.</h3>
+      <h1>El Culto Iluminado</h1>
+      <h3>Una raza de calamares tiránicos cuyo proposito es la destrucción de la democracia gestionada.</h3>
 
       <div class="search-filter">
-        <input type="text" v-model="searchQuery" placeholder="Buscar por nombre..." class="search-box" />
-
-        <select v-model="selectedFilter" class="filter-select">
+        <input type="text" v-model="searchQuery" placeholder="Buscar por nombre..." class="search-box" /> <!-- buscador por nombre-->
+        <select v-model="selectedFilter" class="filter-select"> <!-- menu desplegable que filtra estructura o enemigo solo-->
           <option value="">Enemigos y estructuras</option>
           <option value="enemigos">Enemigos</option>
           <option value="estructuras">Estructuras</option>
         </select>
       </div>
 
-      <div v-if="isLoading" class="loading-container">
+      <div v-if="isLoading" class="loading-container"> 
         <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
           <circle cx="25" cy="25" r="20" stroke="#FFE900" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" >
             <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite" />
@@ -24,7 +23,7 @@
         <p class="loading-text">Cargando iluminados...</p>
       </div>
 
-      <div v-else>
+      <div v-else> <!-- mostrar los resultados de groupedIluminados por el tipo de unidad (estructura o enemigo)-->
         <div v-for="(group, tipo) in groupedIluminados" :key="tipo" class="division-group">
           <h2>{{ tipo }}</h2>
           <div class="home-container">
@@ -68,12 +67,12 @@ export default {
       isLoading: true
     }
   },
-  computed: {
+  computed: { //Datos que se calculan a partir de otros datos, aqui filtramos por estructura o enemigo solo, pues no hay cepas ni divisiones
     filteredIluminados() {
       return this.iluminados.filter(e => {
-        const matchesName = e.name?.toLowerCase().includes(this.searchQuery.toLowerCase())
+        const matchesName = e.name?.toLowerCase().includes(this.searchQuery.toLowerCase()) //nombre
 
-        let matchesType = true
+        let matchesType = true //estructura
         if (this.selectedFilter === 'enemigos') matchesType = e.structure === false
         else if (this.selectedFilter === 'estructuras') matchesType = e.structure === true
 
@@ -235,6 +234,15 @@ h3 {
   object-fit: cover;
   object-position: center;
 }
+
+.flex-item p {
+  word-wrap: break-word;       /* Soporta palabras largas */
+  white-space: break-all;
+  overflow-wrap: break-word;   /* Versión moderna */
+  text-align: center;          /* Centra el texto, opcional */
+  margin: 0 25px;
+}
+
 
 .info {
   text-align: center;
