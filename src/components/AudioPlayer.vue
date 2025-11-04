@@ -71,7 +71,7 @@ export default {
         },
       ],
       player: null,
-      volume: 50,
+      volume: 20,
       isPlaying: false,
       currentIndex: 0,
       currentSong: {},
@@ -116,6 +116,8 @@ export default {
               if (this.player && this.isPlaying)
                 this.currentTime = this.player.getCurrentTime();
             }, 250);
+            this.isPlaying = true;
+            e.target.playVideo();
           },
           onStateChange: (e) => { //cuando el video cambia de estado:
             if (e.data === 0) this.isPlaying = false;
@@ -222,6 +224,11 @@ export default {
   opacity: 0;
   overflow: hidden;
   transition: all 0.4s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  margin-top: 5px;
 }
 
 .card:hover .controls-wrapper {

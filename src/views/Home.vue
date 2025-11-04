@@ -1,5 +1,6 @@
 <template>
   <Header :startIndex="0"/>
+  <div class="background"></div>
   <main class="content">
     <h1>Bienvenido a la Base de Datos de Supertierra</h1>
     <h2>Todo lo que conocemos de los enemigos de la libertad y las estratagemas para defenderla</h2>
@@ -45,9 +46,24 @@ export default {
 
 <style scoped>
 
+.background {
+  position: fixed;        
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/Home_Background.jpg") center/cover no-repeat;
+  z-index: -1;             
+  filter: brightness(0.3);
+}
+
+
 .content {
+  position: relative;
+  z-index: 1;              /* asegura que esté por encima del fondo */
   flex: 1;
-  margin: 10px 75px;
+  margin: 100px 75px;
+  color: white;            /* si el fondo es oscuro */
 }
 
 h1 {
@@ -78,7 +94,6 @@ h3 {
   padding: 75px;
 }
 
-/* Estilo para cada "flexbox" */
 .flex-item {
   display: flex;
   flex-direction: column;
@@ -95,6 +110,10 @@ h3 {
 
 .flex-item:hover p {
   color: #FFE900;
+}
+
+.flex-item:active {
+  transform: scale(0.95);
 }
 
 .flex-item img {

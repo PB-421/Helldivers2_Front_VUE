@@ -1,6 +1,7 @@
 <template>
   <div class="page-container">
     <Header :startIndex="4"/>
+    <div class="background"></div>
     <main class="content">
       <h1>El Culto Iluminado</h1>
       <h3>Una raza de calamares tiránicos cuyo proposito es la destrucción de la democracia gestionada.</h3>
@@ -119,10 +120,24 @@ export default {
   min-height: 100vh;
 }
 
+.background {
+  position: fixed;        
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/Illum_Background.jpg") center/cover no-repeat;
+  z-index: -1;             
+  filter: brightness(0.3);
+}
+
+
 .content {
+  position: relative;
+  z-index: 1;
   flex: 1;
-  margin: 10px 75px;
-  padding-bottom: 80px;
+  margin: 100px 75px;
+  color: white;
 }
 
 .loading-container {
@@ -263,7 +278,7 @@ h3 {
 }
 
 .flex-item:hover .extra-info {
-  max-height: 200px;
+  max-height: 400px;
   opacity: 1;
 }
 

@@ -31,7 +31,9 @@ export default {
 
 <style scoped>
 .header {
-  position: relative; /* Importante para posicionar el reproductor dentro del header */
+  position: fixed;
+  z-index: 2;
+  width: 100%;
   background-color: #1f2833;
   color: #ffe900;
   padding: 10px 20px;
@@ -59,6 +61,10 @@ export default {
 
 .logo:hover {
   transform: scale(1.1);
+}
+
+.logo:active {
+  transform: scale(0.9);
 }
 
 .title {

@@ -1,6 +1,7 @@
 <template>
   <div class="page-container">
     <Header :startIndex="3"/>
+    <div class="background"></div>
     <main class="content">
       <h1>La Legión Autómata</h1>
       <h3>Unos robots socialistas que pretenden envenenar la libertad de ideas antidemocráticas.</h3>
@@ -125,10 +126,24 @@ export default {
   min-height: 100vh;
 }
 
+.background {
+  position: fixed;        
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/Auto_Background.jpg") center/cover no-repeat;
+  z-index: -1;             
+  filter: brightness(0.25);
+}
+
+
 .content {
+  position: relative;
+  z-index: 1;
   flex: 1;
-  margin: 10px 75px;
-  padding-bottom: 80px;
+  margin: 100px 75px;
+  color: white;
 }
 
 .loading-container {
@@ -266,7 +281,7 @@ h3 {
 }
 
 .flex-item:hover .extra-info {
-  max-height: 200px;
+  max-height: 400px;
   opacity: 1;
 }
 
