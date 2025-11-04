@@ -11,17 +11,33 @@
     </div>
 
     <div class="controls-wrapper">
+      <div class="controls-wrapper-image"></div>
       <input type="range" min="0" :max="duration" step="0.01" v-model="currentTime" @input="seekVideo" class="slider" style="margin-top: 10px" />
       <div class="controls">
-        <button class="button" @click="prevSong" title="Anterior">⏮️</button>
-        <button class="button" @click="togglePlayPause" title="Play/Pausa">
-          {{ isPlaying ? '⏸️' : '▶️' }}
+        <button class="button" @click="prevSong" title="Anterior">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+            <path d="M18 20V4l-8.5 8L18 20zM6 4h2v16H6V4z" />
+          </svg>
         </button>
-        <button class="button" @click="nextSong" title="Siguiente">⏭️</button>
+        <button class="button" @click="togglePlayPause" title="Play/Pausa">
+          <svg v-if="!isPlaying" viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <svg v-else viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+          </svg>
+        </button>
+        <button class="button" @click="nextSong" title="Siguiente">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+            <path d="M6 4v16l8.5-8L6 4zM18 4h-2v16h2V4z" />
+          </svg>
+        </button>
       </div>
 
       <div class="volume">
-        <label>🔊: {{ volume }}%</label>
+        <label>
+          🔊: {{ volume }}%
+        </label>
         <input type="range" min="0" max="100" v-model="volume" @input="changeVolume" class="slider" />
       </div>
     </div>
@@ -219,11 +235,26 @@ export default {
 
 /* Controles ocultos por defecto */
 .controls-wrapper {
+  position: relative;
   margin-top: 5px;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
   transition: all 0.4s ease;
+}
+
+.controls-wrapper-image {
+  position: absolute;
+  inset: 0;
+  background: url("/superearth.png") center/cover no-repeat;
+  filter: brightness(0.3);
+  z-index: 0;
+}
+
+/* Cambiamos el indice de los botones a uno mas alto */
+.controls-wrapper > *:not(.controls-wrapper-image) {
+  position: relative;
+  z-index: 1;
 }
 
 .card:hover {
@@ -233,7 +264,6 @@ export default {
 
 .card:hover .controls-wrapper {
   max-height: 150px;
-  background: #2c2c2c;
   padding: 10px;
   border-radius: 5px;
   border: 2px solid #ffe900;
