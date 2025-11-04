@@ -1,42 +1,51 @@
-# HelldiversFront
+# Helldivers 2 - Fan Made Web Interface
 
-This template should help get you started developing with Vue 3 in Vite.
+**Helldivers 2 - Fan Made Web Interface** is a personal project created as an interface for *Helldivers 2* fans. This web app provides access to detailed information about Stratagems and the Freedom's enemies, including descriptions. It's a useful resource for players looking to improve their strategies in the game!
 
-## Recommended IDE Setup
+## Features
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Access to Stratagems**: View all available Stratagems in the game with their respective descriptions.
+- **Freedom's Enemies**: Learn about the various enemies of Freedom, their behavior, and how to face them.
+- **Smooth Interface**: Built with Vue.js, providing a fast and enjoyable user experience.
+- **Dynamic Animations**: GSAP is used to create interactive animations that enhance the web interface.
 
-## Recommended Browser Setup
+## Technologies Used
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+This project was developed using the following technologies:
 
-## Type Support for `.vue` Imports in TS
+- **Vue.js**: JavaScript framework for building reactive user interfaces.
+- **Vue Router**: For navigating between pages within the application.
+- **GSAP**: For creating high-quality animations.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Installation
 
-## Customize configuration
+If you want to run the project locally, follow these steps:
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+1. **Clone the repository**:
 
-## Project Setup
+   ```bash
+   git clone https://github.com/PB-421/Helldivers2_Front_VUE.git
+   ```
 
-```sh
-npm install
-```
+2. **Install dependencies**:
+   
+    Make sure you have Node.js and npm installed. Then, inside the project directory, run:
+   ```bash
+   npm install
+   ```
 
-### Compile and Hot-Reload for Development
+3. **Run the project**:
 
-```sh
-npm run dev
-```
+    After installing the dependencies, run the following command to start the development server:
+   ```bash
+   npm run dev
+   ```
 
-### Type-Check, Compile and Minify for Production
+   This will launch the project in development mode
 
-```sh
-npm run build
-```
+## Licence
+
+  This project is personal and fan-made. It is not for commercial purposes and serves as a tribute to Helldivers 2 and its community. You may use this project for learning and     exploration, but not for commercial purposes.
+
+  Let me know your thoughts and thank you for reading. And remember,  **Freedom conquers all**.
+  
