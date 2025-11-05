@@ -101,6 +101,7 @@ h3 {
   cursor: pointer;
   width: 22%;
   padding: 10px;
+  min-width: 200px;
   transition: transform 0.3s ease-in-out;
 }
 

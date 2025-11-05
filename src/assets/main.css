@@ -2,6 +2,7 @@
 
 #app {
   width: 100%;
+  min-width: 700px;
   margin: 0 auto;
   font-weight: normal;
 }

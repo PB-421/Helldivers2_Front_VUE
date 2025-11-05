@@ -34,12 +34,13 @@ export default {
   position: fixed;
   z-index: 2;
   width: 100%;
+  min-width: 630px;
+  top: 0;
   background-color: #1f2833;
   color: #ffe900;
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   border-bottom: 2px solid #41639c;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
@@ -47,6 +48,7 @@ export default {
 .header-content {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .logo {
