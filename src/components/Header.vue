@@ -34,7 +34,7 @@ export default {
   position: fixed;
   z-index: 2;
   width: 100%;
-  min-width: 630px;
+  min-width: 670px;
   top: 0;
   background-color: #1f2833;
   color: #ffe900;

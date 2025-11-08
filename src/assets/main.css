@@ -5,6 +5,14 @@
   min-width: 700px;
   margin: 0 auto;
   font-weight: normal;
+  scrollbar-color: #41639C #FFE900; /* Para chrome */
+  
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #FFE900 #41639C;
 }
 
 @media (hover: hover) {
@@ -16,8 +24,8 @@
 @media (min-width: 1024px) {
   body {
     display: flex;
-    align-items: flex-start; /* en lugar de center */
-    justify-content: center; /* opcional */
+    align-items: flex-start; 
+    justify-content: center; 
   }
 
   #app {

@@ -35,13 +35,20 @@
       </div>
 
       <div class="volume">
-        <label>
-          🔊: {{ volume }}%
-        </label>
-        <input type="range" min="0" max="100" v-model="volume" @input="changeVolume" class="slider" />
+        <label>🔊: {{ volume }}%</label>
+        <div class="volume-row">
+          <input type="range" min="0" max="100" v-model="volume" @input="changeVolume" class="slider" />
+          <button class="autoplay-btn" @click="toggleAutoplay" :title="autoplay ? 'Autoplay ON' : 'Autoplay OFF'">
+            <svg v-if="autoplay" viewBox="0 0 24 24" width="22" height="22" fill="#0f0">
+              <path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/>
+            </svg>
+            <svg v-else viewBox="0 0 24 24" width="22" height="22" fill="#f00">
+              <path d="M18.3 5.71L12 12l6.3 6.29-1.41 1.42L12 13.41l-6.29 6.3-1.42-1.42L10.59 12 4.29 5.71 5.7 4.29 12 10.59l6.29-6.3z"/>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
-    <!-- Contenedor del reproductor de YouTube oculto -->
     <div id="player-container"></div>
   </div>
 </template>
@@ -94,15 +101,26 @@ export default {
       duration: 0,
       currentTime: 0,
       timeInterval: null,
+      autoplay: true,
     };
   },
   watch: { //funciones atentas a cambios de variables
-    currentIndex(newIndex) {
+    currentIndex(newIndex) {//cuando cambie la variable currentIndex, esta funcion se activa
       this.currentSong = this.playlist[newIndex];
       this.loadVideo(this.currentSong.id);
     },
   },
   mounted() { //Se ejecuta al cargar el componente
+    const saved = this.getCookie("autoplay");
+    if (saved === undefined) {this.setCookie("autoplay",true)}
+    else {
+      if(saved === "false"){
+        this.autoplay = false;
+      } else {
+        this.autoplay = true;
+      }
+    }
+
     this.currentIndex = this.startIndex;
     this.currentSong = this.playlist[this.currentIndex];
     this.loadYouTubeAPI();
@@ -118,6 +136,20 @@ export default {
       document.body.appendChild(tag);
       window.onYouTubeIframeAPIReady = this.initPlayer;
     },
+    setCookie(name,value){ //Cookies en el cliente
+      const date = new Date()
+      const expire = new Date(date.getTime() + 365 * 24 * 60 * 60 * 1000).toUTCString();
+      document.cookie = `${name}=${value}; path=/; expires=${expire}`;
+    },
+    getCookie(name){
+      const cookies = document.cookie.split('; ');
+      const value = cookies.find((cookie) => cookie.trim().startsWith(name+"="))?.split("=")[1];
+      return value;
+    },
+    toggleAutoplay() {
+      this.autoplay = !this.autoplay;
+      this.setCookie("autoplay", this.autoplay);
+    },
     initPlayer() { //crea el reproductor de YouTube dentro de la pagina
       this.player = new window.YT.Player("player-container", {
         height: "0", //sin tamaño porque es solo audio
@@ -132,8 +164,10 @@ export default {
               if (this.player && this.isPlaying)
                 this.currentTime = this.player.getCurrentTime();
             }, 250);
-            this.isPlaying = true;
-            e.target.playVideo();
+            if (this.autoplay) {
+              this.isPlaying = true;
+              e.target.playVideo();
+            }
           },
           onStateChange: (e) => { //cuando el video cambia de estado:
             if (e.data === 0) this.isPlaying = false;
@@ -150,7 +184,7 @@ export default {
       this.currentTime = 0;
       this.duration = 0;
 
-      const checkDuration = setInterval(() => {
+      const checkDuration = setInterval(() => { //consigue la duracion del video 250 ms despues de cargar para evitar fallos
         const d = this.player.getDuration();
         if (d && !isNaN(d)) {
           this.duration = d;
@@ -296,6 +330,28 @@ export default {
 
 .volume label { color: white; font-size: 14px; }
 
+.volume-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.autoplay-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  transition: transform 0.2s ease;
+}
+
+.autoplay-btn:hover {
+  transform: scale(1.15);
+}
+
+.autoplay-btn:active {
+  transform: scale(0.85);
+}
+
 .slider {
   width: 100%;
   margin-top: 5px;
@@ -316,10 +372,6 @@ export default {
   cursor: pointer;
 }
 
-.slider::-webkit-slider-thumb:active { background: #ffe900; border: 2px solid #41639c; }
-.slider::-webkit-slider-track { background: #5e5e5e; height: 4px; border-radius: 2px; }
-.slider::-webkit-slider-progress { background: #41639c; height: 4px; border-radius: 2px; }
-
 /* Estilo del slider firefox*/
 .slider::-moz-range-thumb {
   width: 15px;
@@ -331,7 +383,7 @@ export default {
   transition: 0.3 ease;
 }
 
-.slider::-moz-range-thumb:active { background: #ffe900; border: 2px solid #41639c; }
+.slider::-moz-range-thumb:active, .slider::-webkit-slider-thumb:active { background: #ffe900; border: 2px solid #41639c; }
 .slider::-moz-range-track { background: #5e5e5e; height: 4px; border-radius: 2px; }
 .slider::-moz-range-progress { background: #41639c; height: 4px; border-radius: 2px; }
 
