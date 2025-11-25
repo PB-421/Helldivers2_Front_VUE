@@ -228,37 +228,37 @@ h3 {
 }
 
 .flex-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
+  position: relative;
   width: 220px;
-  transition: all 0.3s ease-in-out;
+  padding: 10px;
+  transition: all 0.3s ease;
   background-color: #1f2833;
   border-radius: 10px;
   color: #fff;
+  cursor: pointer;
   overflow: hidden;
-  position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .flex-item:hover {
   transform: scale(1.07);
   background-color: #2a3542;
-}
-
-.flex-item p {
-  word-wrap: break-word;      
-  white-space: break-all;
-  overflow-wrap: break-word;   
-  text-align: center;         
-  margin: 0 25px;
+  overflow: visible;
+  z-index: 20;
 }
 
 .flex-item img {
-  height: 150px;
+  height: 130px;
   border-radius: 8px;
   object-fit: cover;
+}
+
+
+.flex-item p {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: center;
 }
 
 .info {
@@ -272,12 +272,17 @@ h3 {
 }
 
 .extra-info {
+  position: absolute;
+  top: (100% - 10px); /* empieza con la targeta */
+  left: 0;
+  width: 100%;
+  background: #2a3542;
+  padding: 10px;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
   max-height: 0;
   opacity: 0;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  margin-top: 8px;
+  transition: all 0.35s ease;
 }
 
 .flex-item:hover .extra-info {
@@ -285,9 +290,4 @@ h3 {
   opacity: 1;
 }
 
-.no-results {
-  text-align: center;
-  margin-top: 40px;
-  color: #999;
-}
 </style>

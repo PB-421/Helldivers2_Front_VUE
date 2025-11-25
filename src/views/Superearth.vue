@@ -220,24 +220,23 @@ h3 {
 
 /* Tarjeta */
 .flex-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
+  position: relative;
   width: 220px;
   padding: 10px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
   background-color: #1f2833;
   border-radius: 10px;
   color: #fff;
+  cursor: pointer;
   overflow: hidden;
-  position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .flex-item:hover {
   transform: scale(1.07);
   background-color: #2a3542;
+  overflow: visible;
+  z-index: 20;
 }
 
 .flex-item img {
@@ -245,6 +244,13 @@ h3 {
   height: 150px;
   border-radius: 8px;
   object-fit: cover;
+}
+
+.flex-item p {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: center;
 }
 
 .info {
@@ -258,16 +264,22 @@ h3 {
 }
 
 .extra-info {
+  position: absolute;
+  top: (100% - 10px); /* empieza con la targeta */
+  left: 0;
+  width: 100%;
+  background: #2a3542;
+  padding: 10px;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
   max-height: 0;
   opacity: 0;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  margin-top: 8px;
+  transition: all 0.35s ease;
 }
 
 .flex-item:hover .extra-info {
   max-height: 400px;
   opacity: 1;
 }
+
 </style>
