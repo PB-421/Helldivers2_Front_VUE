@@ -137,6 +137,7 @@ export default {
   z-index: 1;
   flex: 1;
   margin: 100px 75px;
+  margin-bottom: 280px;
   color: white;
 }
 

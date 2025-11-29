@@ -12,7 +12,7 @@
 
     <div class="controls-wrapper">
       <div class="controls-wrapper-image"></div>
-      <input type="range" min="0" :max="duration" step="0.01" v-model="currentTime" @input="seekVideo" class="slider" style="margin-top: 10px" />
+      <input type="range" min="0" :max="duration" step="0.01" v-model="currentTime" @input="seekVideo" class="slider" style="margin-top: 10px" :style="`--value: ${(currentTime / duration) * 100}`"/>
       <div class="controls">
         <button class="button" @click="prevSong" title="Anterior">
           <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
@@ -37,7 +37,7 @@
       <div class="volume">
         <label>🔊: {{ volume }}%</label>
         <div class="volume-row">
-          <input type="range" min="0" max="100" v-model="volume" @input="changeVolume" class="slider" />
+          <input type="range" min="0" max="100" v-model="volume" @input="changeVolume" class="slider" :style="`--value: ${volume}`"/> <!-- el style del final es para que chrome pueda mostrar la barra de progreso-->
           <button class="autoplay-btn" @click="toggleAutoplay" :title="autoplay ? 'Autoplay ON' : 'Autoplay OFF'">
             <svg v-if="autoplay" viewBox="0 0 24 24" width="22" height="22" fill="#0f0">
               <path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/>
@@ -91,6 +91,12 @@ export default {
           title: "The Illuminate Cult",
           artist: "Wilbert Roget II",
           image: "/illuminate.png",
+        },
+        {
+          id: "xS-Ople7ICQ",
+          title: "March of the Helldivers",
+          artist: "Wilbert Roget II",
+          image: "/HD2.png",
         },
       ],
       player: null,
@@ -352,40 +358,66 @@ export default {
   transform: scale(0.85);
 }
 
+/* ----- BASE DEL SLIDER ----- */
 .slider {
   width: 100%;
-  margin-top: 5px;
   height: 4px;
-  background-color: #41639c;
   border-radius: 2px;
+  background: transparent;
   appearance: none;
+  outline: none;
+  position: relative;
 }
 
-/* Estilo del slider chrome */
+/* ======== CHROME ======== */
+.slider::-webkit-slider-runnable-track {
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    #41639c calc(var(--value) * 1%),
+    #5e5e5e calc(var(--value) * 1%)
+  );
+  border-radius: 2px;
+}
+
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 15px;
-  height: 15px; 
+  height: 15px;
   border-radius: 50%;
   background: #41639c;
   border: 2px solid #ffe900;
   cursor: pointer;
+  margin-top: -6px; /* centra el thumb */
 }
 
-/* Estilo del slider firefox*/
+/* ======== FIREFOX ======== */
+.slider::-moz-range-track {
+  height: 4px;
+  background: #5e5e5e;
+  border-radius: 2px;
+}
+
+.slider::-moz-range-progress {
+  height: 4px;
+  background: #41639c;
+  border-radius: 2px;
+}
+
 .slider::-moz-range-thumb {
   width: 15px;
-  height: 15px; 
+  height: 15px;
   border-radius: 50%;
   background: #41639c;
   border: 2px solid #ffe900;
   cursor: pointer;
-  transition: 0.3 ease;
 }
 
-.slider::-moz-range-thumb:active, .slider::-webkit-slider-thumb:active { background: #ffe900; border: 2px solid #41639c; }
-.slider::-moz-range-track { background: #5e5e5e; height: 4px; border-radius: 2px; }
-.slider::-moz-range-progress { background: #41639c; height: 4px; border-radius: 2px; }
+.slider:active::-webkit-slider-thumb,
+.slider:active::-moz-range-thumb {
+  background: #ffe900;
+  border: 2px solid #41639c;
+}
 
 /* Contenedor del player oculto */
 #player-container { width: 0; height: 0; overflow: hidden; }
