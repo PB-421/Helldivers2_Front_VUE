@@ -25,6 +25,10 @@
         <p class="loading-text">Cargando estratagemas...</p>
       </div>
 
+      <div v-else-if="!Object.keys(groupedEstratagemas).length" class="no-data">
+        <p>No se ha podido cargar la información.<br></br> La democracia gestionada esta trabajando para solucionarlo.</p>
+      </div>
+
       <div v-else> <!-- mostrar los resultados de groupedEstratagemas por el tipo de departamento-->
         <div v-for="(group, department) in groupedEstratagemas" :key="department" class="department-group">
           <h2>{{ department || "Sin departamento" }}</h2>
@@ -148,6 +152,13 @@ export default {
   font-size: 18px;
   color: #FFE900;
   animation: blink 1.5s infinite;
+}
+
+.no-data {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 18px;
+  color: #FFE900;
 }
 
 @keyframes blink {

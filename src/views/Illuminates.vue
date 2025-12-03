@@ -24,6 +24,10 @@
         <p class="loading-text">Cargando iluminados...</p>
       </div>
 
+      <div v-else-if="!Object.keys(groupedIluminados).length" class="no-data">
+        <p>No se ha podido cargar la información.<br></br> La democracia gestionada esta trabajando para solucionarlo.</p>
+      </div>
+
       <div v-else> <!-- mostrar los resultados de groupedIluminados por el tipo de unidad (estructura o enemigo)-->
         <div v-for="(group, tipo) in groupedIluminados" :key="tipo" class="division-group">
           <h2>{{ tipo }}</h2>
@@ -151,6 +155,13 @@ export default {
   font-size: 18px;
   color: #FFE900;
   animation: blink 1.5s infinite;
+}
+
+.no-data {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 18px;
+  color: #FFE900;
 }
 
 @keyframes blink {

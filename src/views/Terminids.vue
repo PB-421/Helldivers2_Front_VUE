@@ -25,6 +25,10 @@
         <p class="loading-text">Cargando terminidos...</p>
       </div>
 
+      <div v-else-if="!Object.keys(groupedTerminidos).length" class="no-data">
+        <p>No se ha podido cargar la información.<br></br> La democracia gestionada esta trabajando para solucionarlo.</p>
+      </div>
+
       <div v-else> <!-- mostrar los resultados de groupedTerminidos por el tipo de cepa-->
         <div v-for="(group, strain) in groupedTerminidos" :key="strain" class="strain-group" >
           <h2>{{ strain }}</h2>
@@ -157,6 +161,13 @@ export default {
   font-size: 18px;
   color: #FFE900;
   animation: blink 1.5s infinite;
+}
+
+.no-data {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 18px;
+  color: #FFE900;
 }
 
 @keyframes blink {
