@@ -24,11 +24,11 @@
         <p class="loading-text">Cargando iluminados...</p>
       </div>
 
-      <div v-else-if="!Object.keys(groupedIluminados).length" class="no-data">
+      <div v-else-if="apiError" class="no-data">
         <p>No se ha podido cargar la información.<br></br> La democracia gestionada esta trabajando para solucionarlo.</p>
       </div>
 
-      <div v-else> <!-- mostrar los resultados de groupedIluminados por el tipo de unidad (estructura o enemigo)-->
+      <div v-else-if="Object.keys(groupedIluminados).length"> <!-- mostrar los resultados de groupedIluminados por el tipo de unidad (estructura o enemigo)-->
         <div v-for="(group, tipo) in groupedIluminados" :key="tipo" class="division-group">
           <h2>{{ tipo }}</h2>
           <div class="home-container">
@@ -46,10 +46,10 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <div v-if="!Object.keys(groupedIluminados).length" class="no-results">
-          <p>No se encontraron resultados.</p>
-        </div>
+      <div v-else class="no-data">
+        <p>No se encontraron resultados para los filtros seleccionados.</p>
       </div>
     </main>
 
@@ -69,7 +69,8 @@ export default {
       iluminados: [],
       searchQuery: '',
       selectedFilter: '',
-      isLoading: true
+      isLoading: true,
+      apiError: true,
     }
   },
   computed: { //Datos que se calculan a partir de otros datos, aqui filtramos por estructura o enemigo solo, pues no hay cepas ni divisiones
@@ -103,6 +104,7 @@ export default {
         if (!response.ok) throw new Error(`Error en la API: ${response.status}`)
         const data = await response.json()
         this.iluminados = Array.isArray(data) ? data : []
+        if(this.terminidos != []) this.apiError = false;
       } catch (error) {
         console.error('Error al obtener datos:', error)
         this.iluminados = []

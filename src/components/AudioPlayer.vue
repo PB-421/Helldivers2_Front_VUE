@@ -35,7 +35,11 @@
       </div>
 
       <div class="volume">
-        <label>🔊: {{ volume }}%</label>
+        <button class="mute-btn" @click="toggleMute" :title="isMuted ? 'Desmutear' : 'Mutear'">
+          <span v-if="isMuted">🔇</span>
+          <span v-else>🔊</span>
+        </button>
+        <span class="volume-text">{{ volume }}%</span>
         <div class="volume-row">
           <input type="range" min="0" max="100" v-model="volume" @input="changeVolume" class="slider" :style="`--value: ${volume}`"/> <!-- el style del final es para que chrome pueda mostrar la barra de progreso-->
           <button class="autoplay-btn" @click="toggleAutoplay" :title="autoplay ? 'Autoplay ON' : 'Autoplay OFF'">
@@ -101,6 +105,8 @@ export default {
       ],
       player: null,
       volume: 20,
+      lastVolume: 20,
+      isMuted: false,
       isPlaying: false,
       currentIndex: 0,
       currentSong: {},
@@ -190,7 +196,7 @@ export default {
       this.currentTime = 0;
       this.duration = 0;
 
-      const checkDuration = setInterval(() => { //consigue la duracion del video 250 ms despues de cargar para evitar fallos
+      const checkDuration = setInterval(() => { //consigue la duracion del video 200 ms despues de cargar para evitar fallos
         const d = this.player.getDuration();
         if (d && !isNaN(d)) {
           this.duration = d;
@@ -217,8 +223,30 @@ export default {
       this.currentIndex =
         (this.currentIndex - 1 + this.playlist.length) % this.playlist.length;
     },
+    toggleMute() {
+      if (!this.player) return;
+      if (this.isMuted) {
+        this.volume = this.lastVolume || 20;
+        this.player.setVolume(this.volume);
+        this.isMuted = false;
+      } else {
+        this.lastVolume = this.volume;
+        this.volume = 0;
+        this.player.setVolume(0);
+        this.isMuted = true;
+      }
+    },
     changeVolume() {
-      if (this.player) this.player.setVolume(this.volume);
+      if (!this.player) return;
+
+      this.player.setVolume(this.volume);
+
+      if (this.volume === 0) {
+        this.isMuted = true;
+      } else {
+        this.isMuted = false;
+        this.lastVolume = this.volume;
+      }
     },
     seekVideo() {
       if (this.player) this.player.seekTo(this.currentTime, true);
@@ -334,7 +362,24 @@ export default {
   margin-bottom: 6px;
 }
 
-.volume label { color: white; font-size: 14px; }
+.mute-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #ffe900;
+  transition: transform 0.2s ease;
+}
+
+.mute-btn:hover {
+  transform: scale(1.2);
+}
+
+.mute-btn:active {
+  transform: scale(0.9);
+}
+
+.volume-text { color: white; font-size: 14px; }
 
 .volume-row {
   display: flex;

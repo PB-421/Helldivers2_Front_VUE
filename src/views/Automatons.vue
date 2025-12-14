@@ -25,11 +25,11 @@
         <p class="loading-text">Cargando autómatas...</p>
       </div>
 
-      <div v-else-if="!Object.keys(groupedAutomatas).length" class="no-data">
+      <div v-else-if="apiError" class="no-data">
         <p>No se ha podido cargar la información.<br></br> La democracia gestionada esta trabajando para solucionarlo.</p>
       </div>
 
-      <div v-else> <!-- mostrar los resultados de groupedAutomatas por el tipo de division-->
+      <div v-else-if="Object.keys(groupedAutomatas).length"> <!-- mostrar los resultados de groupedAutomatas por el tipo de division-->
         <div v-for="(group, division) in groupedAutomatas" :key="division" class="division-group" >
           <h2>{{ division }}</h2>
           <div class="home-container">
@@ -47,6 +47,10 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div v-else class="no-data">
+        <p>No se encontraron resultados para los filtros seleccionados.</p>
       </div>
     </main>
 
@@ -66,7 +70,8 @@ export default {
       automatas: [],
       searchQuery: '',
       selectedDivision: '',
-      isLoading: true
+      isLoading: true,
+      apiError: true
     }
   },
   computed: { //Datos que se calculan a partir de otros datos, como el numero de divisiones
@@ -108,6 +113,7 @@ export default {
         if (!response.ok) throw new Error(`Error en la API: ${response.status}`)
         const data = await response.json()
         this.automatas = Array.isArray(data) ? data : []
+        if(this.automatas != []) this.apiError = false;
       } catch (error) {
         console.error('Error al obtener datos:', error)
         this.automatas = []

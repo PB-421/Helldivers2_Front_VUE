@@ -25,11 +25,11 @@
         <p class="loading-text">Cargando estratagemas...</p>
       </div>
 
-      <div v-else-if="!Object.keys(groupedEstratagemas).length" class="no-data">
+      <div v-else-if="apiError" class="no-data">
         <p>No se ha podido cargar la información.<br></br> La democracia gestionada esta trabajando para solucionarlo.</p>
       </div>
 
-      <div v-else> <!-- mostrar los resultados de groupedEstratagemas por el tipo de departamento-->
+      <div v-else-if="Object.keys(groupedEstratagemas).length"> <!-- mostrar los resultados de groupedEstratagemas por el tipo de departamento-->
         <div v-for="(group, department) in groupedEstratagemas" :key="department" class="department-group">
           <h2>{{ department || "Sin departamento" }}</h2>
           <div class="home-container">
@@ -46,6 +46,10 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div v-else class="no-data">
+        <p>No se encontraron resultados para los filtros seleccionados.</p>
       </div>
     </main>
 
@@ -65,7 +69,8 @@ export default {
       estratagemas: [],
       searchQuery: '',
       selectedType: '',
-      isLoading: true 
+      isLoading: true,
+      apiError: true
     }
   },
   computed: { //Datos que se calculan a partir de otros datos, como el numero de tipos o de departamentos
@@ -95,13 +100,10 @@ export default {
       this.isLoading = true 
       try {
         const response = await fetch('https://helldivers2-api.onrender.com/api/superearth')
-        if (!response.ok) {
-          console.error('Error en la API:', response.status)
-          this.estratagemas = []
-          return
-        }
+        if (!response.ok) throw new Error(`Error en la API: ${response.status}`)
         const data = await response.json()
         this.estratagemas = Array.isArray(data) ? data : []
+        if(this.estratagemas != []) this.apiError = false;
       } catch (error) {
         console.error('Error al obtener los datos de la API:', error)
       } finally {
