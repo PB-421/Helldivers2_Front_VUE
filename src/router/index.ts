@@ -4,7 +4,7 @@ import SuperEarth from '../views/Superearth.vue'
 import Terminids from '../views/Terminids.vue'
 import Automatons from '../views/Automatons.vue'
 import Illuminates from '../views/Illuminates.vue'
-// definicion de rutas y componente principal usan (se pueden definir mas comopentes en la view)
+import GalaxyStatus from '../views/GalaxyStatus.vue'
 
 const routes = [
   {
@@ -32,6 +32,11 @@ const routes = [
     name: 'Illuminates',
     component: Illuminates
   },
+  {
+    path: '/war-status',
+    name: 'GalaxyMap',
+    component: GalaxyStatus
+  }
 ]
 
 const router = createRouter({

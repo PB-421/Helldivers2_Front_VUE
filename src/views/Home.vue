@@ -4,23 +4,26 @@
   <main class="content">
     <h1>Bienvenido a la Base de Datos de Supertierra</h1>
     <h2>Todo lo que conocemos de los enemigos de la libertad y las estratagemas para defenderla</h2>
-    <h3>Selecciona una facción</h3>
+    <h3>Selecciona una sección</h3>
     <div class="home-container">
       <div class="flex-item" @click="goToUrl('superearth')">
-        <img src="/superearth2.png" alt="Imagen 1" />
+        <img src="/superearth2.png" alt="SuperTierra" />
         <p>SuperTierra</p>
       </div>
       <div class="flex-item" @click="goToUrl('terminids')">
-        <img src="/terminids.png" alt="Imagen 2" />
+        <img src="/terminids.png" alt="Terminidos" />
         <p>Terminidos</p>
       </div>
       <div class="flex-item" @click="goToUrl('automatons')">
-        <img src="/automatons.png" alt="Imagen 3"/>
-        <p>Automatas</p>
+        <img src="/automatons.png" alt="Automatas" />
+        <p>Autómatas</p>
       </div>
       <div class="flex-item" @click="goToUrl('illuminates')">
-        <img src="/illuminate.png" alt="Imagen 4" />
+        <img src="/illuminate.png" alt="Iluminados" />
         <p>Iluminados</p>
+      </div>
+      <div class="flex-item war-status-item" @click="goToUrl('war-status')">
+        <p>Estado de la Guerra</p>
       </div>
     </div>
   </main>
@@ -30,6 +33,7 @@
 <script>
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
+
 export default {
   name: 'Home',
   components: {
@@ -38,6 +42,7 @@ export default {
   },
   methods: {
     goToUrl(route) {
+      // Asegúrate de que en tu router la ruta se llame 'war-status'
       this.$router.push(`/${route}`);
     }
   }
@@ -45,7 +50,6 @@ export default {
 </script>
 
 <style scoped>
-
 .background {
   position: fixed;        
   top: 0;
@@ -57,13 +61,12 @@ export default {
   filter: brightness(0.3);
 }
 
-
 .content {
   position: relative;
-  z-index: 1;              /* asegura que esté por encima del fondo */
+  z-index: 1;
   flex: 1;
   margin: 100px 75px;
-  color: white;            /* si el fondo es oscuro */
+  color: white;
 }
 
 h1 {
@@ -86,12 +89,12 @@ h3 {
 
 .home-container {
   display: flex;
-  justify-content: space-between;
-  margin: 0px 100px;
+  justify-content: center; /* Cambiado a center para mejor balance con 5 items */
+  margin: 0px 50px;
   margin-top: 60px;
   gap: 20px;
   flex-wrap: wrap;
-  padding: 75px;
+  padding: 20px;
 }
 
 .flex-item {
@@ -99,10 +102,16 @@ h3 {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  width: 22%;
+  width: 18%; /* Reducido de 22% para que quepan 5 items en línea */
   padding: 10px;
-  min-width: 200px;
+  min-width: 160px;
   transition: transform 0.3s ease-in-out;
+}
+
+/* Estilo especial para resaltar el Mapa de la Guerra */
+.war-status-item p {
+  color: #FFE900;
+  text-shadow: 0 0 10px rgba(255, 233, 0, 0.5);
 }
 
 .flex-item:hover {
@@ -121,6 +130,12 @@ h3 {
   width: 100%;
   height: auto;
   border-radius: 8px;
+  border: 1px solid transparent;
+  transition: border 0.3s;
+}
+
+.flex-item:hover img {
+  border: 1px solid #FFE900;
 }
 
 .flex-item p {
@@ -129,5 +144,17 @@ h3 {
   color: #FFFFFF;
   font-size: 18px;
   font-weight: bold;
+}
+
+@media (max-width: 1024px) {
+  .flex-item {
+    width: 30%;
+  }
+}
+
+@media (max-width: 600px) {
+  .flex-item {
+    width: 45%;
+  }
 }
 </style>
