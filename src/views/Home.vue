@@ -1,5 +1,5 @@
 <template>
-  <Header :startIndex="Math.random() < 0.5 ? 0 : 5"/>
+  <Header :startIndex="5"/>
   <div class="background"></div>
   <main class="content">
     <h1>Bienvenido a la Base de Datos de Supertierra</h1>
