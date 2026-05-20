@@ -8,6 +8,7 @@
 - **Freedom's Enemies**: Learn about the various enemies of Freedom, their behavior, and how to face them.
 - **Smooth Interface**: Built with Vue.js, providing a fast and enjoyable user experience.
 - **Dynamic Animations**: GSAP is used to create interactive animations that enhance the web interface.
+- **Live Status of Galactic War**: See the current state of the war by looking at the **Major Orders** or by looking at the galactic map to see the liberation process of each planet 
 
 ## Technologies Used
 
@@ -43,9 +44,14 @@ If you want to run the project locally, follow these steps:
 
    This will launch the project in development mode
 
-## Licence
+## ⚖️ License Information
 
-  This project is personal and fan-made. It is not for commercial purposes and serves as a tribute to Helldivers 2 and its community. You may use this project for learning and     exploration, but not for commercial purposes.
+   This project is licensed under the **MIT License**.
+   
+   You are free to use, modify, and distribute this software, provided that the
+   original copyright notice and this permission notice are included.
+   
+   For more details, see the `LICENSE` file in this repository.
 
-  Let me know your thoughts and thank you for reading. And remember,  **Freedom conquers all**.
+   Let me know your thoughts and thank you for reading. And remember,  **Freedom conquers all**.
   
