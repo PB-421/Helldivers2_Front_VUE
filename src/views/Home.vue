@@ -22,7 +22,8 @@
         <img src="/illuminate.png" alt="Iluminados" />
         <p>Iluminados</p>
       </div>
-      <div class="flex-item war-status-item" @click="goToUrl('war-status')">
+      <div class="flex-item" @click="goToUrl('war-status')">
+        <img src="/skull.png" alt="Guerra galactica" />
         <p>Estado de la Guerra</p>
       </div>
     </div>
@@ -42,7 +43,6 @@ export default {
   },
   methods: {
     goToUrl(route) {
-      // Asegúrate de que en tu router la ruta se llame 'war-status'
       this.$router.push(`/${route}`);
     }
   }
@@ -89,7 +89,7 @@ h3 {
 
 .home-container {
   display: flex;
-  justify-content: center; /* Cambiado a center para mejor balance con 5 items */
+  justify-content: center;
   margin: 0px 50px;
   margin-top: 60px;
   gap: 20px;
@@ -102,17 +102,13 @@ h3 {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  width: 18%; /* Reducido de 22% para que quepan 5 items en línea */
+  width: 18%;
   padding: 10px;
   min-width: 160px;
   transition: transform 0.3s ease-in-out;
 }
 
-/* Estilo especial para resaltar el Mapa de la Guerra */
-.war-status-item p {
-  color: #FFE900;
-  text-shadow: 0 0 10px rgba(255, 233, 0, 0.5);
-}
+
 
 .flex-item:hover {
   transform: scale(1.05);
@@ -132,10 +128,6 @@ h3 {
   border-radius: 8px;
   border: 1px solid transparent;
   transition: border 0.3s;
-}
-
-.flex-item:hover img {
-  border: 1px solid #FFE900;
 }
 
 .flex-item p {
